@@ -32,16 +32,19 @@ public class ExpenseReport {
     }
 
     private static void print(List<Expense> expenses, int mealExpenses, int total) {
-        String mealOverExpensesMarker;
         System.out.println("Expenses " + new Date());
+        printExpensesDetails(expenses);
+        System.out.println("Meal expenses: " + mealExpenses);
+        System.out.println("Total expenses: " + total);
+    }
+
+    private static void printExpensesDetails(List<Expense> expenses) {
+        String mealOverExpensesMarker;
         for (Expense expense : expenses) {
             String expenseName = getExpenseName(expense);
             mealOverExpensesMarker = isOverExpensesAmountMeal(expense) ? "X" : " ";
             System.out.println(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
         }
-
-        System.out.println("Meal expenses: " + mealExpenses);
-        System.out.println("Total expenses: " + total);
     }
 
     private static boolean isOverExpensesAmountMeal(Expense expense) {
