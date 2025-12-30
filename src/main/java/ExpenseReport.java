@@ -45,7 +45,15 @@ public class ExpenseReport {
     }
 
     private static boolean isOverExpensesAmountMeal(Expense expense) {
-        return expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000;
+        return isDinnerAndOverExpense(expense) || isBreakfastAndOverExpanse(expense);
+    }
+
+    private static boolean isBreakfastAndOverExpanse(Expense expense) {
+        return expense.type == ExpenseType.BREAKFAST && expense.amount > 1000;
+    }
+
+    private static boolean isDinnerAndOverExpense(Expense expense) {
+        return expense.type == ExpenseType.DINNER && expense.amount > 5000;
     }
 
     private static String getExpenseName(Expense expense) {
