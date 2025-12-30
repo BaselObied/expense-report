@@ -5,10 +5,6 @@ enum ExpenseType {
     DINNER, BREAKFAST, CAR_RENTAL
 }
 
-class Expense {
-    ExpenseType type;
-    int amount;
-}
 
 public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
