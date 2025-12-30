@@ -16,15 +16,16 @@ public class ExpenseReport {
     }
 
     private static int getTotalExpenses(List<Expense> expenses) {
-        return expenses.stream().mapToInt(expense -> expense.amount).sum();
+        return expenses.stream()
+                .mapToInt(expense -> expense.amount)
+                .sum();
     }
 
     private static int getMealExpenses(List<Expense> expenses) {
-        int mealExpenses = 0;
-        for (Expense expense : expenses) {
-            mealExpenses = calculateExpenseMeal(expense, mealExpenses);
-        }
-        return mealExpenses;
+        return expenses.stream()
+                .filter(ExpenseReport::isExpenseMeal)
+                .mapToInt(expense -> expense.amount)
+                .sum();
     }
 
     private static void print(List<Expense> expenses, int mealExpenses, int total) {
@@ -45,13 +46,6 @@ public class ExpenseReport {
 
     private static boolean isOverExpensesAmountMeal(Expense expense) {
         return expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000;
-    }
-
-    private static int calculateExpenseMeal(Expense expense, int mealExpenses) {
-        if (isExpenseMeal(expense)) {
-            mealExpenses += expense.amount;
-        }
-        return mealExpenses;
     }
 
     private static String getExpenseName(Expense expense) {
