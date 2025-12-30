@@ -14,9 +14,6 @@ public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
         int total = 0;
         int mealExpenses = 0;
-        String mealOverExpensesMarker;
-
-        System.out.println("Expenses " + new Date());
 
         for (Expense expense : expenses) {
             mealExpenses = calculateExpensesMeals(expense, mealExpenses);
@@ -28,6 +25,7 @@ public class ExpenseReport {
 
     private static void print(List<Expense> expenses, int mealExpenses, int total) {
         String mealOverExpensesMarker;
+        System.out.println("Expenses " + new Date());
         for (Expense expense : expenses) {
             String expenseName = getExpenseName(expense);
             mealOverExpensesMarker = isOverExpensesAmountMeal(expense) ? "X" : " ";
