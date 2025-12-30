@@ -14,22 +14,19 @@ public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
         int total = 0;
         int mealExpenses = 0;
+        String mealOverExpensesMarker = null;
 
         System.out.println("Expenses " + new Date());
 
         for (Expense expense : expenses) {
             mealExpenses = calculateExpensesMeals(expense, mealExpenses);
+            total += expense.amount;
         }
 
         for (Expense expense : expenses) {
-
             String expenseName = getExpenseName(expense);
-
-            String mealOverExpensesMarker = isOverExpensesAmountMeal(expense) ? "X" : " ";
-
+            mealOverExpensesMarker = isOverExpensesAmountMeal(expense) ? "X" : " ";
             System.out.println(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
-
-            total += expense.amount;
         }
 
         System.out.println("Meal expenses: " + mealExpenses);
