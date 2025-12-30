@@ -3,6 +3,7 @@ import java.util.List;
 
 public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
+        ExpenseSummary summary = ExpenseSummary.summarize(expenses);
         print(expenses, getMealExpenses(expenses), getTotalExpenses(expenses));
     }
 

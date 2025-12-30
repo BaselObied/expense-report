@@ -9,7 +9,7 @@ public class ExpenseSummary {
         this.totalExpenses = totalExpenses;
     }
 
-    private static ExpenseSummary summarize(List<Expense> expenses) {
+    public static ExpenseSummary summarize(List<Expense> expenses) {
         return new ExpenseSummary(
                 getMealExpenses(expenses),
                 getTotalExpenses(expenses)
