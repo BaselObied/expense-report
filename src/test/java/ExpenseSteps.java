@@ -15,8 +15,18 @@ public class ExpenseSteps {
     private final ExpenseReport report = new ExpenseReport();
     private String printedOutput;
 
+    // Store the input values for verification
+    private int breakfastAmount;
+    private int dinnerAmount;
+    private int carAmount;
+
     @Given("I have a breakfast of {int} and a dinner of {int} and a car rental of {int}")
     public void createExpense(int breakfastAmt, int dinnerAmt, int carAmt) {
+        // Store for later verification
+        this.breakfastAmount = breakfastAmt;
+        this.dinnerAmount = dinnerAmt;
+        this.carAmount = carAmt;
+
         Expense breakfast = new Expense();
         breakfast.type = ExpenseType.BREAKFAST;
         breakfast.amount = breakfastAmt;
@@ -49,6 +59,14 @@ public class ExpenseSteps {
 
     @Then("the report should be printed")
     public void verifyPrinted() {
-        assertEquals("", printedOutput);
+        // Verify structure and header
+        assertFalse(printedOutput.isEmpty());
+        assertTrue(printedOutput.startsWith("Expenses "));
+        assertTrue(printedOutput.contains("Breakfast\t" + breakfastAmount + "\t "),
+                "Expected breakfast: " + breakfastAmount);
+        assertTrue(printedOutput.contains("Dinner\t" + dinnerAmount + "\t "),
+                "Expected dinner: " + dinnerAmount);
+        assertTrue(printedOutput.contains("Car Rental\t" + carAmount + "\t "),
+                "Expected car rental: " + carAmount);
     }
 }
