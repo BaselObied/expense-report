@@ -14,13 +14,23 @@ public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
         int total = 0;
         int mealExpenses = 0;
+        mealExpenses = getMealExpenses(expenses, mealExpenses);
+        total = getTotalExpenses(expenses, total);
+        print(expenses, mealExpenses, total);
+    }
 
+    private static int getTotalExpenses(List<Expense> expenses, int total) {
         for (Expense expense : expenses) {
-            mealExpenses = calculateExpensesMeals(expense, mealExpenses);
             total += expense.amount;
         }
+        return total;
+    }
 
-        print(expenses, mealExpenses, total);
+    private static int getMealExpenses(List<Expense> expenses, int mealExpenses) {
+        for (Expense expense : expenses) {
+            mealExpenses = calculateExpenseMeal(expense, mealExpenses);
+        }
+        return mealExpenses;
     }
 
     private static void print(List<Expense> expenses, int mealExpenses, int total) {
@@ -40,7 +50,7 @@ public class ExpenseReport {
         return expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000;
     }
 
-    private static int calculateExpensesMeals(Expense expense, int mealExpenses) {
+    private static int calculateExpenseMeal(Expense expense, int mealExpenses) {
         if (isExpenseMeal(expense)) {
             mealExpenses += expense.amount;
         }
