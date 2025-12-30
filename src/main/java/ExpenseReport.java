@@ -19,6 +19,9 @@ public class ExpenseReport {
 
         for (Expense expense : expenses) {
             mealExpenses = calculateExpensesMeals(expense, mealExpenses);
+        }
+
+        for (Expense expense : expenses) {
 
             String expenseName = getExpenseName(expense);
 
