@@ -36,12 +36,14 @@ public class ExpenseReport {
     }
 
     private static void printExpensesDetails(List<Expense> expenses) {
-        String mealOverExpensesMarker;
-        for (Expense expense : expenses) {
+        expenses.forEach( expense -> {
             String expenseName = getExpenseName(expense);
-            mealOverExpensesMarker = isOverExpensesAmountMeal(expense) ? "X" : " ";
-            printOut(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
-        }
+            printOut(expenseName + "\t" + expense.amount + "\t" + getMealOverExpensesMarker(expense));
+        });
+    }
+
+    private static String getMealOverExpensesMarker(Expense expense) {
+        return isOverExpensesAmountMeal(expense) ? "X" : " ";
     }
 
     private static boolean isOverExpensesAmountMeal(Expense expense) {
