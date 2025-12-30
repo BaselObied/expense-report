@@ -22,7 +22,7 @@ public class ExpenseReport {
 
             String expenseName = getExpenseName(expense);
 
-            String mealOverExpensesMarker = expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000 ? "X" : " ";
+            String mealOverExpensesMarker = isOverExpensesAmountMeal(expense) ? "X" : " ";
 
             System.out.println(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
 
@@ -31,6 +31,10 @@ public class ExpenseReport {
 
         System.out.println("Meal expenses: " + mealExpenses);
         System.out.println("Total expenses: " + total);
+    }
+
+    private static boolean isOverExpensesAmountMeal(Expense expense) {
+        return expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000;
     }
 
     private static int calculateExpensesMeals(Expense expense, int mealExpenses) {
