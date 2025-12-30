@@ -4,7 +4,7 @@ import java.util.List;
 public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
         ExpenseSummary summary = ExpenseSummary.summarize(expenses);
-        print(expenses, getMealExpenses(expenses), getTotalExpenses(expenses));
+        print(expenses, summary);
     }
 
     private static int getTotalExpenses(List<Expense> expenses) {
@@ -20,11 +20,11 @@ public class ExpenseReport {
                 .sum();
     }
 
-    private static void print(List<Expense> expenses, int mealExpenses, int total) {
+    private static void print(List<Expense> expenses, ExpenseSummary summary) {
         printOut("Expenses " + new Date());
         printExpensesDetails(expenses);
-        printOut("Meal expenses: " + mealExpenses);
-        printOut("Total expenses: " + total);
+        printOut("Meal expenses: " + summary.mealExpenses);
+        printOut("Total expenses: " + summary.totalExpenses);
     }
 
     private static void printExpensesDetails(List<Expense> expenses) {
