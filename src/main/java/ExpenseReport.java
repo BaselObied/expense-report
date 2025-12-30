@@ -18,9 +18,7 @@ public class ExpenseReport {
         System.out.println("Expenses " + new Date());
 
         for (Expense expense : expenses) {
-            if (isExpenseMeal(expense)) {
-                mealExpenses += expense.amount;
-            }
+            mealExpenses = calculateExpensesMeals(expense, mealExpenses);
 
             String expenseName = getExpenseName(expense);
 
@@ -33,6 +31,13 @@ public class ExpenseReport {
 
         System.out.println("Meal expenses: " + mealExpenses);
         System.out.println("Total expenses: " + total);
+    }
+
+    private static int calculateExpensesMeals(Expense expense, int mealExpenses) {
+        if (isExpenseMeal(expense)) {
+            mealExpenses += expense.amount;
+        }
+        return mealExpenses;
     }
 
     private static String getExpenseName(Expense expense) {
