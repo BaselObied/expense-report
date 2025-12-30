@@ -171,6 +171,38 @@ public class ExpenseSteps {
         assertTrue(printedOutput.contains("Total expenses: " + dinnerAmount),
                 "Total expenses should equal dinner amount");
     }
+
+    @Given("I have only breakfast over expenses {int}")
+    public void breakfastOverExpenses(int breakfastAmount) {
+        this.breakfastAmount = breakfastAmount;
+        this.dinnerAmount = 0;
+        this.carAmount = 0;
+
+        Expense breakfast = new Expense();
+        breakfast.type = ExpenseType.BREAKFAST;
+        breakfast.amount = breakfastAmount;
+
+        expenses.clear();
+        expenses.add(breakfast);
+    }
+
+    @Then("the report should contain only breakfast Over expenses")
+    public void verifyBreakfastOverExpenses() {
+        verifyReportStructure();
+
+        assertTrue(printedOutput.contains("Breakfast\t" + breakfastAmount + "\t" + "X"),
+                "Expected breakfast: " + breakfastAmount);
+        assertFalse(printedOutput.contains("Dinner\t"),
+                "Should not contain dinner");
+        assertFalse(printedOutput.contains("Car Rental\t"),
+                "Should not contain car rental");
+
+        assertTrue(printedOutput.contains("Meal expenses: " + breakfastAmount),
+                "Meal expenses should equal breakfast amount");
+        assertTrue(printedOutput.contains("Total expenses: " + breakfastAmount),
+                "Total expenses should equal breakfast amount");
+
+    }
     // Common verification helpers
     private void verifyReportStructure() {
         assertNotNull(printedOutput, "Output should not be null");

@@ -19,3 +19,8 @@ Feature: Expense report printing (legacy behavior)
     Given I have only dinner over expenses 5001
     When I print the expense report
     Then the report should contain only dinner Over expenses
+
+  Scenario: Print expense report with breakfast over expanses
+    Given I have only breakfast over expenses 1001
+    When I print the expense report
+    Then the report should contain only breakfast Over expenses
