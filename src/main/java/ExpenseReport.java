@@ -12,8 +12,7 @@ class Expense {
 
 public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
-        int mealExpenses = 0;
-        print(expenses, getMealExpenses(expenses, mealExpenses), getTotalExpenses(expenses));
+        print(expenses, getMealExpenses(expenses), getTotalExpenses(expenses));
     }
 
     private static int getTotalExpenses(List<Expense> expenses) {
@@ -24,7 +23,8 @@ public class ExpenseReport {
         return total;
     }
 
-    private static int getMealExpenses(List<Expense> expenses, int mealExpenses) {
+    private static int getMealExpenses(List<Expense> expenses) {
+        int mealExpenses = 0;
         for (Expense expense : expenses) {
             mealExpenses = calculateExpenseMeal(expense, mealExpenses);
         }
