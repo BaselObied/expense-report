@@ -7,19 +7,6 @@ public class ExpenseReport {
         print(expenses, summary);
     }
 
-    private static int getTotalExpenses(List<Expense> expenses) {
-        return expenses.stream()
-                .mapToInt(expense -> expense.amount)
-                .sum();
-    }
-
-    private static int getMealExpenses(List<Expense> expenses) {
-        return expenses.stream()
-                .filter(ExpenseReport::isExpenseMeal)
-                .mapToInt(expense -> expense.amount)
-                .sum();
-    }
-
     private static void print(List<Expense> expenses, ExpenseSummary summary) {
         printOut("Expenses " + new Date());
         printExpensesDetails(expenses);
@@ -56,10 +43,6 @@ public class ExpenseReport {
             case BREAKFAST -> "Breakfast";
             case CAR_RENTAL -> "Car Rental";
         };
-    }
-
-    private static boolean isExpenseMeal(Expense expense) {
-        return expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST;
     }
 
     private static void printOut(String s) {
