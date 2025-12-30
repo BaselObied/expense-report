@@ -16,11 +16,7 @@ public class ExpenseReport {
     }
 
     private static int getTotalExpenses(List<Expense> expenses) {
-        int total = 0;
-        for (Expense expense : expenses) {
-            total += expense.amount;
-        }
-        return total;
+        return expenses.stream().mapToInt(expense -> expense.amount).sum();
     }
 
     private static int getMealExpenses(List<Expense> expenses) {
