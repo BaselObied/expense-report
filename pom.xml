@@ -41,12 +41,48 @@
         </dependency>
     </dependencies>
 
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.15.3</version>
+                <dependencies>
+                    <!-- JUnit 5 support -->
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>1.2.1</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <!-- Target classes to mutate -->
+                    <targetClasses>
+                        <param>ExpenseReport*</param>
+                        <param>Expense*</param>
+                    </targetClasses>
+                    <!-- Test classes that will kill mutants -->
+                    <targetTests>
+                        <param>*CucumberTest</param>
+                    </targetTests>
+                    <!-- Mutation operators -->
+                    <mutators>
+                        <mutator>DEFAULTS</mutator>
+                    </mutators>
+                    <!-- Output formats -->
+                    <outputFormats>
+                        <outputFormat>HTML</outputFormat>
+                        <outputFormat>XML</outputFormat>
+                    </outputFormats>
+                    <!-- Verbose output -->
+                    <verbose>true</verbose>
+                </configuration>
             </plugin>
         </plugins>
     </build>
