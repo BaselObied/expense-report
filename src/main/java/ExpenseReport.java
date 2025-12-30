@@ -12,12 +12,12 @@ class Expense {
 
 public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
-        int total = 0;
         int mealExpenses = 0;
-        print(expenses, getMealExpenses(expenses, mealExpenses), getTotalExpenses(expenses, total));
+        print(expenses, getMealExpenses(expenses, mealExpenses), getTotalExpenses(expenses));
     }
 
-    private static int getTotalExpenses(List<Expense> expenses, int total) {
+    private static int getTotalExpenses(List<Expense> expenses) {
+        int total = 0;
         for (Expense expense : expenses) {
             total += expense.amount;
         }
