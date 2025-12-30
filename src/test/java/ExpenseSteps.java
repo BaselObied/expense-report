@@ -110,6 +110,67 @@ public class ExpenseSteps {
                 "Total expenses should equal breakfast amount");
     }
 
+    @Given("I have a dinner of {int}")
+    public void createDinnerOnly(int dinnerAmount) {
+        this.dinnerAmount = dinnerAmount;
+        this.breakfastAmount = 0;
+        this.carAmount = 0;
+
+        Expense dinner = new Expense();
+        dinner.type = ExpenseType.DINNER;
+        dinner.amount = dinnerAmount;
+
+        expenses.clear();
+        expenses.add(dinner);
+    }
+
+    @Then("the report should contain only dinner")
+    public void verifyDinnerOnly() {
+        verifyReportStructure();
+
+        assertTrue(printedOutput.contains("Dinner\t" + dinnerAmount + "\t "),
+                "Expected dinner: " + dinnerAmount);
+        assertFalse(printedOutput.contains("Breakfast\t"),
+                "Should not contain breakfast");
+        assertFalse(printedOutput.contains("Car Rental\t"),
+                "Should not contain car rental");
+
+        assertTrue(printedOutput.contains("Meal expenses: " + dinnerAmount),
+                "Meal expenses should equal dinner amount");
+        assertTrue(printedOutput.contains("Total expenses: " + dinnerAmount),
+                "Total expenses should equal dinner amount");
+    }
+
+    @Given("I have only dinner over expenses {int}")
+    public void dinnerOverExpenses(int dinnerAmount) {
+        this.dinnerAmount = dinnerAmount;
+        this.breakfastAmount = 0;
+        this.carAmount = 0;
+
+        Expense dinner = new Expense();
+        dinner.type = ExpenseType.DINNER;
+        dinner.amount = dinnerAmount;
+
+        expenses.clear();
+        expenses.add(dinner);
+    }
+
+    @Then("the report should contain only dinner Over expenses")
+    public void verifyDinnerOverExpenses() {
+        verifyReportStructure();
+
+        assertTrue(printedOutput.contains("Dinner\t" + dinnerAmount + "\t" + "X"),
+                "Expected dinner: " + dinnerAmount + "with X");
+        assertFalse(printedOutput.contains("Breakfast\t"),
+                "Should not contain breakfast");
+        assertFalse(printedOutput.contains("Car Rental\t"),
+                "Should not contain car rental");
+
+        assertTrue(printedOutput.contains("Meal expenses: " + dinnerAmount),
+                "Meal expenses should equal dinner amount");
+        assertTrue(printedOutput.contains("Total expenses: " + dinnerAmount),
+                "Total expenses should equal dinner amount");
+    }
     // Common verification helpers
     private void verifyReportStructure() {
         assertNotNull(printedOutput, "Output should not be null");
