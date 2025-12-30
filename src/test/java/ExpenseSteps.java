@@ -20,20 +20,6 @@ public class ExpenseSteps {
     private int dinnerAmount;
     private int carAmount;
 
-
-    @When("I print the expense report")
-    public void printExpense() {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PrintStream original = System.out;
-        System.setOut(new PrintStream(out));
-
-        report.printReport(expenses);
-
-        System.setOut(original);
-        printedOutput = out.toString();
-        System.out.println(printedOutput);
-    }
-
     @Given("I have a breakfast of {int} and a dinner of {int} and a car rental of {int}")
     public void createFullExpanses(int breakfastAmt, int dinnerAmt, int carAmt) {
         // Store for later verification
@@ -59,6 +45,57 @@ public class ExpenseSteps {
         expenses.add(car);
     }
 
+    @Given("I have a breakfast of {int}")
+    public void createBreakfastOnly(int breakfastAmt) {
+        this.breakfastAmount = breakfastAmt;
+        this.dinnerAmount = 0;
+        this.carAmount = 0;
+
+        Expense breakfast = new Expense();
+        breakfast.type = ExpenseType.BREAKFAST;
+        breakfast.amount = breakfastAmt;
+
+        expenses.clear();
+        expenses.add(breakfast);
+    }
+
+    @Given("I have a dinner of {int}")
+    public void createDinnerOnly(int dinnerAmount) {
+        this.dinnerAmount = dinnerAmount;
+        this.breakfastAmount = 0;
+        this.carAmount = 0;
+
+        Expense dinner = new Expense();
+        dinner.type = ExpenseType.DINNER;
+        dinner.amount = dinnerAmount;
+
+        expenses.clear();
+        expenses.add(dinner);
+    }
+
+    @Given("I have only dinner over expenses {int}")
+    public void createDinnerOverExpenses(int dinnerAmt) {
+        createDinnerOnly(dinnerAmt);
+    }
+
+    @Given("I have only breakfast over expenses {int}")
+    public void createBreakfastOverExpenses(int breakfastAmt) {
+        createBreakfastOnly(breakfastAmt);
+    }
+
+    @When("I print the expense report")
+    public void printExpense() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream original = System.out;
+        System.setOut(new PrintStream(out));
+
+        report.printReport(expenses);
+
+        System.setOut(original);
+        printedOutput = out.toString();
+        System.out.println(printedOutput);
+    }
+
     @Then("the report should contain all expenses")
     public void verifyAllExpenses() {
         verifyReportStructure();
@@ -79,20 +116,6 @@ public class ExpenseSteps {
                 "Expected total expenses: " + expectedTotal);
     }
 
-    @Given("I have a breakfast of {int}")
-    public void createBreakfastOnly(int breakfastAmt) {
-        this.breakfastAmount = breakfastAmt;
-        this.dinnerAmount = 0;
-        this.carAmount = 0;
-
-        Expense breakfast = new Expense();
-        breakfast.type = ExpenseType.BREAKFAST;
-        breakfast.amount = breakfastAmt;
-
-        expenses.clear();
-        expenses.add(breakfast);
-    }
-
     @Then("the report should contain only breakfast")
     public void verifyBreakfastOnly() {
         verifyReportStructure();
@@ -108,20 +131,6 @@ public class ExpenseSteps {
                 "Meal expenses should equal breakfast amount");
         assertTrue(printedOutput.contains("Total expenses: " + breakfastAmount),
                 "Total expenses should equal breakfast amount");
-    }
-
-    @Given("I have a dinner of {int}")
-    public void createDinnerOnly(int dinnerAmount) {
-        this.dinnerAmount = dinnerAmount;
-        this.breakfastAmount = 0;
-        this.carAmount = 0;
-
-        Expense dinner = new Expense();
-        dinner.type = ExpenseType.DINNER;
-        dinner.amount = dinnerAmount;
-
-        expenses.clear();
-        expenses.add(dinner);
     }
 
     @Then("the report should contain only dinner")
@@ -141,11 +150,6 @@ public class ExpenseSteps {
                 "Total expenses should equal dinner amount");
     }
 
-    @Given("I have only dinner over expenses {int}")
-    public void createDinnerOverExpenses(int dinnerAmt) {
-        createDinnerOnly(dinnerAmt);
-    }
-
     @Then("the report should contain only dinner Over expenses")
     public void verifyDinnerOverExpenses() {
         verifyReportStructure();
@@ -162,12 +166,6 @@ public class ExpenseSteps {
         assertTrue(printedOutput.contains("Total expenses: " + dinnerAmount),
                 "Total expenses should equal dinner amount");
     }
-
-    @Given("I have only breakfast over expenses {int}")
-    public void createBreakfastOverExpenses(int breakfastAmt) {
-        createBreakfastOnly(breakfastAmt);
-    }
-
 
     @Then("the report should contain only breakfast Over expenses")
     public void verifyBreakfastOverExpenses() {
@@ -208,6 +206,7 @@ public class ExpenseSteps {
         assertTrue(printedOutput.contains("Meal expenses: " + breakfastAmount));
         assertTrue(printedOutput.contains("Total expenses: " + breakfastAmount));
     }
+
     // Common verification helpers
     private void verifyReportStructure() {
         assertNotNull(printedOutput, "Output should not be null");
