@@ -1,11 +1,6 @@
 import java.util.Date;
 import java.util.List;
 
-enum ExpenseType {
-    DINNER, BREAKFAST, CAR_RENTAL
-}
-
-
 public class ExpenseReport {
     public void printReport(List<Expense> expenses) {
         print(expenses, getMealExpenses(expenses), getTotalExpenses(expenses));

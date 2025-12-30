@@ -1,4 +1,4 @@
-class Expense {
+public class Expense {
     ExpenseType type;
     int amount;
 }
