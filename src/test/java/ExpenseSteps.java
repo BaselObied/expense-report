@@ -142,17 +142,8 @@ public class ExpenseSteps {
     }
 
     @Given("I have only dinner over expenses {int}")
-    public void dinnerOverExpenses(int dinnerAmount) {
-        this.dinnerAmount = dinnerAmount;
-        this.breakfastAmount = 0;
-        this.carAmount = 0;
-
-        Expense dinner = new Expense();
-        dinner.type = ExpenseType.DINNER;
-        dinner.amount = dinnerAmount;
-
-        expenses.clear();
-        expenses.add(dinner);
+    public void createDinnerOverExpenses(int dinnerAmt) {
+        createDinnerOnly(dinnerAmt);
     }
 
     @Then("the report should contain only dinner Over expenses")
@@ -173,18 +164,10 @@ public class ExpenseSteps {
     }
 
     @Given("I have only breakfast over expenses {int}")
-    public void breakfastOverExpenses(int breakfastAmount) {
-        this.breakfastAmount = breakfastAmount;
-        this.dinnerAmount = 0;
-        this.carAmount = 0;
-
-        Expense breakfast = new Expense();
-        breakfast.type = ExpenseType.BREAKFAST;
-        breakfast.amount = breakfastAmount;
-
-        expenses.clear();
-        expenses.add(breakfast);
+    public void createBreakfastOverExpenses(int breakfastAmt) {
+        createBreakfastOnly(breakfastAmt);
     }
+
 
     @Then("the report should contain only breakfast Over expenses")
     public void verifyBreakfastOverExpenses() {
@@ -202,6 +185,28 @@ public class ExpenseSteps {
         assertTrue(printedOutput.contains("Total expenses: " + breakfastAmount),
                 "Total expenses should equal breakfast amount");
 
+    }
+
+    @Then("the report should contain only dinner at expense limit")
+    public void verifyDinnerAtLimit() {
+        verifyReportStructure();
+
+        assertTrue(printedOutput.contains("Dinner\t" + dinnerAmount + "\t "),
+                "Dinner at exactly 5000 should NOT have X marker");
+
+        assertTrue(printedOutput.contains("Meal expenses: " + dinnerAmount));
+        assertTrue(printedOutput.contains("Total expenses: " + dinnerAmount));
+    }
+
+    @Then("the report should contain only breakfast at expense limit")
+    public void verifyBreakfastAtLimit() {
+        verifyReportStructure();
+
+        assertTrue(printedOutput.contains("Breakfast\t" + breakfastAmount + "\t "),
+                "Breakfast at exactly 1000 should NOT have X marker");
+
+        assertTrue(printedOutput.contains("Meal expenses: " + breakfastAmount));
+        assertTrue(printedOutput.contains("Total expenses: " + breakfastAmount));
     }
     // Common verification helpers
     private void verifyReportStructure() {
